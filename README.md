@@ -1,73 +1,43 @@
-# Obsidian Sample Plugin
+# ProZen Plugin for Obsidian
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+The true 'Zen' (fullscreen) mode for Obsidian.
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+## Description
 
-**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
+ProZen not just simply turns your active tab fullscreen - it removes every single distraction. All panels, icons, even scrollbar is gone in Zen mode. And for those who like **extra** concentration on writing or reading, ProZen can dim the sides of the screen, like a vignette.
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Changes the default font color to red using `styles.css`.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+![prozen](https://user-images.githubusercontent.com/69085343/203395343-b1b35200-662d-48f3-b400-3a99fccce915.gif)
+*The gradient is much smoother than on the gif*.
 
-## First time developing plugins?
+## Usage
+### Manual Installation
+1. Download the `main.js`, `styles.css` and `manifest.json` files.
+2. Go to the `/.obsidian/plugins` folder of your Obsidian vault. Create `/obsidian-prozen` in there.
+3. Put the downloaded files into the `/obsidian-prozen` folder.
+4. Restart Obsidian.
+5. Open Obsidian's settings and find ProZen among Community plugins. Enable the plugin, set a hotkey for toggling Zen mode and tweak the plugin's settings to your liking.
 
-Quick starting guide for new plugin devs:
+### Plugin Settings
+#### Vignette
+Dims the sides of the screen gradually, drawing your attention to the text in the middle. Especially effective in the dark room with a dark Obsidian theme. The gradient starts from full transparent to black from the text to the sides. 
+- **Vignette opacity**: makes the dimming effect softer or darker. 0 turns off the vignette.
+- **Vignette scale**: determines how much of the screen space is dimmed.
+#### Toggles
+Turn off some screen elements
+- **Show header**: enables/disables the tab's header in Zen mode. Note that vignette is not applied to the header.
+- **Show scrollbar**: enables/disables the vertical scrollbar (visually, scrolling is still available).
+#### Animations
+- **Fade-in duration**: the duration of the content fade-in animation when entering Zen mode. Just my personal thing. With this animation (I set it to two seconds), the document draws more of my attention and sets me to a productive and inspired mood. 0 turns off the animation.
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+## Known Issues
+- Toggle on/off Zen mode **using your custom hotkey**. **Don't press Esc** to exit fullscreen, or the styles (vignette and show/hide toggles) will still apply to the content.
 
-## Releasing new releases
+## About me
+My name (last name) is Moskvitin, I am an amateur self-taught JS developer, taking coding as a hobby. I hope, someday, I will be skilled enough to turn this hobby into a full-time job. I realize that experienced developers may find my code sloppy and sub-optimal, but I take my pet projects seriously, hunt for perfection in tiny things and try my best to fix the issues I can fix being at this skill level.
+IRL I'm a tech writer for a company, which develops some sophisticated stuff, and describing this stuff requires full concentration on fine wording. So, ProZen is what I made for myself to use on daily basis.
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+I really appreciate any feedback and feature requests on GitHub. You can also...
+[<img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=moskvitin&button_colour=FF5F5F&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="BuyMeACoffee" width="200">](https://www.buymeacoffee.com/moskvitin)
+:)
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
-
-## Adding your plugin to the community plugin list
-
-- Check https://github.com/obsidianmd/obsidian-releases/blob/master/plugin-review.md
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
-
-## How to use
-
-- Clone this repo.
-- `npm i` or `yarn` to install dependencies
-- `npm run dev` to start compilation in watch mode.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
-
-
-## API Documentation
-
-See https://github.com/obsidianmd/obsidian-api
+Have fun using ProZen! :)
