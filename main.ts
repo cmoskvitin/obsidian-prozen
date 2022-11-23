@@ -62,11 +62,18 @@ export default class Prozen extends Plugin {
 				viewEl.classList.add("noscroll")
 			}
 			this.settings.showHeader ? header.classList.add("animate") : header.classList.add("hide")
-
+			return;
 		} else {
 			document.exitFullscreen();
 			viewEl.classList.remove("vignette", "animate", "noscroll")
 			header.classList.remove("animate", "hide")
+		}
+
+		containerEl.onfullscreenchange = () => {
+			if (!document.fullscreenElement && viewEl.classList.contains("vignette")){
+				viewEl.classList.remove("vignette", "animate", "noscroll");
+				header.classList.remove("animate", "hide");
+			}
 		}
 	}
 }
