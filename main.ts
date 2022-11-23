@@ -72,7 +72,7 @@ export default class Prozen extends Plugin {
 		}
 
 		containerEl.onfullscreenchange = () => {
-			if (!document.fullscreenElement && viewEl.classList.contains("vignette")){
+			if (!document.fullscreenElement && (viewEl.classList.contains("vignette") || viewEl.classList.contains("vignette-radial"))){
 				viewEl.classList.remove("vignette", "vignette-radial", "animate", "noscroll");
 				header.classList.remove("animate", "hide");
 			}
