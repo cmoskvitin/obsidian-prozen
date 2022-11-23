@@ -18,6 +18,14 @@
 	);
 }
 
+.vignette-radial {
+	background: radial-gradient(
+		circle,
+		rgba(0, 0, 0, 0) calc(100% - var(--vignette-scale)),
+		rgba(0, 0, 0, var(--vignette-opacity)) 100%
+	);
+}
+
 .animate {
 	animation: fadeIn var(--fadeIn-duration);
 }
