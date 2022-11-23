@@ -30,7 +30,7 @@ Turn off some screen elements
 - **Fade-in duration**: the duration of the content fade-in animation when entering Zen mode. Just my personal thing. With this animation (I set it to two seconds), the document draws more of my attention and sets me to a productive and inspired mood. 0 turns off the animation.
 
 ## Known Issues
-- Toggle on/off Zen mode **using your custom hotkey**. **Don't press Esc** to exit fullscreen, or the styles (vignette and show/hide toggles) will still apply to the content.
+- ~~Toggle on/off Zen mode **using your custom hotkey**. **Don't press Esc** to exit fullscreen, or the styles (vignette and show/hide toggles) will still apply to the content.~~ Fixed by [https://github.com/Quorafind](Quorafind)
 
 ## About me
 My name (last name) is Moskvitin, I am an amateur self-taught JS developer, taking coding as a hobby. I hope, someday, I will be skilled enough to turn this hobby into a full-time job. I realize that experienced developers may find my code sloppy and sub-optimal, but I take my pet projects seriously, hunt for perfection in tiny things and try my best to fix the issues I can fix being at this skill level.
