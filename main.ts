@@ -64,7 +64,6 @@ export default class Prozen extends Plugin {
 			viewEl.classList.add("animate")
 			leaf.view.getViewType() === "graph" ? viewEl.classList.add("vignette-radial") : viewEl.classList.add("vignette")
 			this.settings.showHeader ? header.classList.add("animate") : header.classList.add("hide")
-			return;
 		} else {
 			document.exitFullscreen();
 
@@ -74,7 +73,7 @@ export default class Prozen extends Plugin {
 
 		containerEl.onfullscreenchange = () => {
 			if (!document.fullscreenElement && viewEl.classList.contains("vignette")){
-				viewEl.classList.remove("vignette", "animate", "noscroll");
+				viewEl.classList.remove("vignette", "vignette-radial", "animate", "noscroll");
 				header.classList.remove("animate", "hide");
 			}
 		}
