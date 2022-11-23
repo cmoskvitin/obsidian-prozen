@@ -1,4 +1,4 @@
-import { App, ItemView, MarkdownView, Plugin, PluginSettingTab, Setting } from "obsidian";
+import { App, ItemView, Plugin, PluginSettingTab, Setting } from "obsidian";
 
 interface PluginSettings {
 	animationDuration: number,
@@ -40,8 +40,7 @@ export default class Prozen extends Plugin {
 	}
 
 	fullscreenMode() {
-		console.log("SUP")
-		// Use ItemView rather than only MarkdownView
+		// Use ItemView for multiple view types (previously it was only MarkdownView)
 		const leaf = this.app.workspace.getActiveViewOfType(ItemView).leaf;
 		if (!leaf) return;
 		// Don't trigger fullscreen mode when current leaf is empty.
@@ -57,15 +56,19 @@ export default class Prozen extends Plugin {
 
 		if (!document.fullscreenElement){
 			containerEl.requestFullscreen();
-			viewEl.classList.add("vignette", "animate")
+
 			if (!this.settings.showScroll){
 				viewEl.classList.add("noscroll")
 			}
+
+			viewEl.classList.add("animate")
+			leaf.view.getViewType() === "graph" ? viewEl.classList.add("vignette-radial") : viewEl.classList.add("vignette")
 			this.settings.showHeader ? header.classList.add("animate") : header.classList.add("hide")
 			return;
 		} else {
 			document.exitFullscreen();
-			viewEl.classList.remove("vignette", "animate", "noscroll")
+
+			viewEl.classList.remove("vignette", "vignette-radial", "animate", "noscroll")
 			header.classList.remove("animate", "hide")
 		}
 
