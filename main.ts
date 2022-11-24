@@ -4,6 +4,7 @@ interface PluginSettings {
 	animationDuration: number,
 	showHeader: boolean,
 	showScroll: boolean,
+	showGraphControls: boolean,
 	vignetteOpacity: number,
 	vignetteScaleLinear: number,
 	vignetteScaleRadial: number
@@ -12,7 +13,8 @@ interface PluginSettings {
 const DEFAULT_SETTINGS: PluginSettings = {
 	animationDuration: 2,
 	showHeader: false,
-	showScroll: true,
+	showScroll: false,
+	showGraphControls: false,
 	vignetteOpacity: 0.75,
 	vignetteScaleLinear: 20,
 	vignetteScaleRadial: 75
@@ -56,6 +58,13 @@ export default class Prozen extends Plugin {
 				root.style.setProperty('--vignette-scale-linear', this.settings.vignetteScaleLinear + '%')
 				root.style.setProperty('--vignette-scale-radial', this.settings.vignetteScaleRadial + '%')
 		const header = leaf.view.headerEl
+		
+		// I do this to graph controls (I mean multiple checks of the leaf type down below)
+		// to get rid of console errors on adding/removing classes from when not in the graph view.
+		// I think there is a better solution to this problem, probably, even with a single getViewType() check,
+		// but I couldn't find it. If I'll have found it, I will include it in a future release.
+		let graphControls;
+		if (leaf.view.getViewType() === "graph") { graphControls = leaf.view.dataEngine.controlsEl}
 
 		if (!document.fullscreenElement){
 			containerEl.requestFullscreen();
@@ -66,18 +75,21 @@ export default class Prozen extends Plugin {
 
 			viewEl.classList.add("animate")
 			leaf.view.getViewType() === "graph" ? viewEl.classList.add("vignette-radial") : viewEl.classList.add("vignette-linear")
+			if (leaf.view.getViewType() === "graph" && !this.settings.showGraphControls) { graphControls.classList.add("hide") }
 			this.settings.showHeader ? header.classList.add("animate") : header.classList.add("hide")
 		} else {
 			document.exitFullscreen();
 
 			viewEl.classList.remove("vignette-linear", "vignette-radial", "animate", "noscroll")
 			header.classList.remove("animate", "hide")
+			if (leaf.view.getViewType() === "graph") { graphControls.classList.remove("animate", "hide") }
 		}
-
+		
 		containerEl.onfullscreenchange = () => {
 			if (!document.fullscreenElement && (viewEl.classList.contains("vignette-linear") || viewEl.classList.contains("vignette-radial"))){
 				viewEl.classList.remove("vignette-linear", "vignette-radial", "animate", "noscroll");
 				header.classList.remove("animate", "hide");
+				if (leaf.view.getViewType() === "graph") { graphControls.classList.remove("animate", "hide") }	
 			}
 		}
 	}
@@ -197,6 +209,17 @@ class ProzenSettingTab extends PluginSettingTab {
 				.setValue(this.plugin.settings.showScroll)
 				.onChange(async (value) => {
 					this.plugin.settings.showScroll = value;
+					await this.plugin.saveSettings();
+			})
+		);
+// SHOW GRAPH CONTROLS SETTING
+		new Setting(containerEl)
+			.setName("Show graph controls")
+			.setDesc("Show the graph view's controls in Zen mode")
+			.addToggle((toggle) =>	toggle
+				.setValue(this.plugin.settings.showGraphControls)
+				.onChange(async (value) => {
+					this.plugin.settings.showGraphControls = value;
 					await this.plugin.saveSettings();
 			})
 		);
