@@ -1,19 +1,20 @@
 :root {
 	--vignette-opacity: 1;
 	--fadeIn-duration: "1.2s";
-	--vignette-scale: 20%;
+	--vignette-scale-linear: 20%;
+	--vignette-scale-radial: 50%;
 }
 
 .noscroll ::-webkit-scrollbar-thumb{
 	visibility: hidden;
 }
 
-.vignette {
+.vignette-linear {
 	background: linear-gradient(
 		90deg,
 		rgba(0, 0, 0, var(--vignette-opacity)) 0%,
-		rgba(0, 0, 0, 0) var(--vignette-scale),
-		rgba(0, 0, 0, 0) calc(100% - var(--vignette-scale)),
+		rgba(0, 0, 0, 0) var(--vignette-scale-linear),
+		rgba(0, 0, 0, 0) calc(100% - var(--vignette-scale-linear)),
 		rgba(0, 0, 0, var(--vignette-opacity)) 100%
 	);
 }
@@ -21,7 +22,7 @@
 .vignette-radial {
 	background: radial-gradient(
 		circle,
-		rgba(0, 0, 0, 0) calc(100% - var(--vignette-scale)),
+		rgba(0, 0, 0, 0) calc(100% - var(--vignette-scale-radial)),
 		rgba(0, 0, 0, var(--vignette-opacity)) 100%
 	);
 }
