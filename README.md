@@ -41,7 +41,7 @@ Various toggles for showing/hiding view's elements in Zen mode:
 My name (last name) is Moskvitin, I am an amateur self-taught JS developer, taking coding as a hobby. I hope, someday, I will be skilled enough to turn this hobby into a full-time job. I realize that experienced developers may find my code sloppy and sub-optimal, but I take my pet projects seriously, hunt for perfection in tiny things and try my best to fix the issues I can fix being at this skill level.
 IRL I'm a tech writer for a company, which develops some sophisticated stuff, and describing this stuff requires full concentration on fine wording. So, ProZen is what I made for myself to use on daily basis.
 
-I really appreciate any [feedback and feature requests](https://github.com/cmoskvitin/obsidian-prozen/issues) on GitHub. You can also...
+I really appreciate any [feedback and feature requests](https://github.com/cmoskvitin/obsidian-prozen/discussions) on GitHub. You can also...
 [<img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=moskvitin&button_colour=FF5F5F&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" alt="BuyMeACoffee" width="200">](https://www.buymeacoffee.com/moskvitin)
 :)
 
