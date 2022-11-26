@@ -1,6 +1,6 @@
 :root {
 	--vignette-opacity: 1;
-	--fadeIn-duration: "1.2s";
+	--fadeIn-duration: "2s";
 	--vignette-scale-linear: 20%;
 	--vignette-scale-radial: 50%;
 }
@@ -38,7 +38,7 @@
 @keyframes fadeIn {
 	0% {
 		opacity: 0;
-		transform: scale(1.05);
+		transform: scale(2);
 	}
 	100% {
 		opacity: 1;

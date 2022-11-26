@@ -32,7 +32,7 @@ Turn off some screen elements
 
 
 ## Known Issues
-- ...
+- When cycling through panes with `Ctrl-Tab` or switching to graph view with `Ctrl-G`, Zen mode styling turns off for all the tabs, but stays on the tab, for which Zen mode was initially triggered. In one of the future releases, I would like to make jumping to tabs possible while staying in Zen mode.    
 
 ## About me
 My name (last name) is Moskvitin, I am an amateur self-taught JS developer, taking coding as a hobby. I hope, someday, I will be skilled enough to turn this hobby into a full-time job. I realize that experienced developers may find my code sloppy and sub-optimal, but I take my pet projects seriously, hunt for perfection in tiny things and try my best to fix the issues I can fix being at this skill level.
