@@ -1,4 +1,4 @@
-import { App, ItemView, Plugin, PluginSettingTab, Setting } from "obsidian";
+import { App, ItemView, Plugin, PluginSettingTab, Setting, WorkspaceLeaf } from "obsidian";
 
 interface PluginSettings {
 	animationDuration: number,
@@ -50,48 +50,57 @@ export default class Prozen extends Plugin {
 		// Don't trigger fullscreen mode when current leaf is empty.
 		if(leaf.view.getViewType() === "empty") return;
 
-		const containerEl = leaf.containerEl;
-		const viewEl = leaf.view.contentEl
+
 		const root = document.documentElement
-				root.style.setProperty('--fadeIn-duration', this.settings.animationDuration + 's')
-				root.style.setProperty('--vignette-opacity', this.settings.vignetteOpacity)
-				root.style.setProperty('--vignette-scale-linear', this.settings.vignetteScaleLinear + '%')
-				root.style.setProperty('--vignette-scale-radial', this.settings.vignetteScaleRadial + '%')
-		const header = leaf.view.headerEl
+		root.style.setProperty('--fadeIn-duration', this.settings.animationDuration + 's')
+		root.style.setProperty('--vignette-opacity', this.settings.vignetteOpacity)
+		root.style.setProperty('--vignette-scale-linear', this.settings.vignetteScaleLinear + '%')
+		root.style.setProperty('--vignette-scale-radial', this.settings.vignetteScaleRadial + '%')
 		
-		// I do this to graph controls (I mean multiple checks of the leaf type down below)
-		// to get rid of console errors on adding/removing classes from when not in the graph view.
-		// I think there is a better solution to this problem, probably, even with a single getViewType() check,
-		// but I couldn't find it. If I'll have found it, I will include it in a future release.
-		let graphControls;
-		if (leaf.view.getViewType() === "graph") { graphControls = leaf.view.dataEngine.controlsEl}
+		const containerEl = leaf.containerEl;
 
 		if (!document.fullscreenElement){
 			containerEl.requestFullscreen();
-
-			if (!this.settings.showScroll){
-				viewEl.classList.add("noscroll")
-			}
-
-			viewEl.classList.add("animate")
-			leaf.view.getViewType() === "graph" ? viewEl.classList.add("vignette-radial") : viewEl.classList.add("vignette-linear")
-			if (leaf.view.getViewType() === "graph" && !this.settings.showGraphControls) { graphControls.classList.add("hide") }
-			this.settings.showHeader ? header.classList.add("animate") : header.classList.add("hide")
+			this.addStyles(leaf)
 		} else {
 			document.exitFullscreen();
-
-			viewEl.classList.remove("vignette-linear", "vignette-radial", "animate", "noscroll")
-			header.classList.remove("animate", "hide")
-			if (leaf.view.getViewType() === "graph") { graphControls.classList.remove("animate", "hide") }
+			this.removeStyles(leaf)
 		}
-		
 		containerEl.onfullscreenchange = () => {
-			if (!document.fullscreenElement && (viewEl.classList.contains("vignette-linear") || viewEl.classList.contains("vignette-radial"))){
-				viewEl.classList.remove("vignette-linear", "vignette-radial", "animate", "noscroll");
-				header.classList.remove("animate", "hide");
-				if (leaf.view.getViewType() === "graph") { graphControls.classList.remove("animate", "hide") }	
+			if (!document.fullscreenElement){
+				this.removeStyles(leaf)
 			}
 		}
+	}
+
+	addStyles(leaf: WorkspaceLeaf) {
+		const viewEl = leaf.view.contentEl
+		const header = leaf.view.headerEl
+		const isGraph = leaf.view.getViewType() === "graph"
+
+		let graphControls: HTMLElement;
+		if (isGraph) { graphControls = leaf.view.dataEngine.controlsEl}
+		if (!this.settings.showScroll){	viewEl.classList.add("noscroll") }
+		if (isGraph && !this.settings.showGraphControls) { graphControls.classList.add("hide") }
+		isGraph ? viewEl.classList.add("vignette-radial") : viewEl.classList.add("vignette-linear")
+
+		
+		viewEl.classList.add("animate")
+		this.settings.showHeader ? header.classList.add("animate") : header.classList.add("hide")
+
+	}
+
+	removeStyles(leaf: WorkspaceLeaf) {
+		const viewEl = leaf.view.contentEl
+		const header = leaf.view.headerEl
+		const isGraph = leaf.view.getViewType() === "graph"
+
+		let graphControls: HTMLElement;
+		if (isGraph) { graphControls = leaf.view.dataEngine.controlsEl}
+		if (isGraph) { graphControls.classList.remove("animate", "hide") }
+
+		viewEl.classList.remove("vignette-linear", "vignette-radial", "animate", "noscroll")
+		header.classList.remove("animate", "hide")
 	}
 }
 
