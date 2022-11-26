@@ -26,9 +26,12 @@ Dims the sides of the screen gradually, drawing your attention to the text in th
 #### Animations
 - **Fade-in duration**: the duration of the content fade-in animation when entering Zen mode. Just my personal thing. With this animation (I set it to two seconds), the document draws more of my attention and sets me to a productive and inspired mood. 0 turns off the animation.
 #### Toggles
-Turn off some screen elements
-- **Show header**: enables/disables the tab's header in Zen mode. Note that vignette is not applied to the header.
-- **Show scrollbar**: enables/disables the vertical scrollbar (visually, scrolling is still available).
+Various toggles for showing/hiding view's elements in Zen mode:
+- Scrollbar
+- Header
+- Graph controls in graph view
+#### Other settings (Misc)
+- **Force content centering**: There's a toggle in the _Editor_ section Obsidian's settings called _Readable line width_. When it's toggled off, text content takes all the page's width available. _Force content centering_ makes the text centered in Zen mode ignoring this global setting. 
 
 
 ## Known Issues

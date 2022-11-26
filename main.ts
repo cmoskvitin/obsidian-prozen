@@ -5,6 +5,7 @@ interface PluginSettings {
 	showHeader: boolean,
 	showScroll: boolean,
 	showGraphControls: boolean,
+	forceReadable: boolean,
 	vignetteOpacity: number,
 	vignetteScaleLinear: number,
 	vignetteScaleRadial: number
@@ -15,6 +16,7 @@ const DEFAULT_SETTINGS: PluginSettings = {
 	showHeader: false,
 	showScroll: false,
 	showGraphControls: false,
+	forceReadable: true, 
 	vignetteOpacity: 0.75,
 	vignetteScaleLinear: 20,
 	vignetteScaleRadial: 75
@@ -50,7 +52,6 @@ export default class Prozen extends Plugin {
 		// Don't trigger fullscreen mode when current leaf is empty.
 		if(leaf.view.getViewType() === "empty") return;
 
-
 		const root = document.documentElement
 		root.style.setProperty('--fadeIn-duration', this.settings.animationDuration + 's')
 		root.style.setProperty('--vignette-opacity', this.settings.vignetteOpacity)
@@ -83,6 +84,7 @@ export default class Prozen extends Plugin {
 		if (!this.settings.showScroll){	viewEl.classList.add("noscroll") }
 		if (isGraph && !this.settings.showGraphControls) { graphControls.classList.add("hide") }
 		isGraph ? viewEl.classList.add("vignette-radial") : viewEl.classList.add("vignette-linear")
+		if (!isGraph && this.settings.forceReadable) { leaf.view.editMode.editorEl.classList.add("is-readable-line-width") }
 
 		
 		viewEl.classList.add("animate")
@@ -96,8 +98,12 @@ export default class Prozen extends Plugin {
 		const isGraph = leaf.view.getViewType() === "graph"
 
 		let graphControls: HTMLElement;
-		if (isGraph) { graphControls = leaf.view.dataEngine.controlsEl}
-		if (isGraph) { graphControls.classList.remove("animate", "hide") }
+		if (isGraph) {
+			graphControls = leaf.view.dataEngine.controlsEl
+			graphControls.classList.remove("animate", "hide")
+		} else if (!this.app.vault.getConfig('readableLineLength')) {
+			leaf.view.editMode.editorEl.classList.remove("is-readable-line-width")
+		}
 
 		viewEl.classList.remove("vignette-linear", "vignette-radial", "animate", "noscroll")
 		header.classList.remove("animate", "hide")
@@ -229,6 +235,22 @@ class ProzenSettingTab extends PluginSettingTab {
 				.setValue(this.plugin.settings.showGraphControls)
 				.onChange(async (value) => {
 					this.plugin.settings.showGraphControls = value;
+					await this.plugin.saveSettings();
+			})
+		);
+
+		this.containerEl.createEl("h3", {
+			text: "Misc",
+		})
+
+// FORCE READABLE SETTING
+		new Setting(containerEl)
+			.setName("Force content centering")
+			.setDesc("Center text content in Zen mode, even if in regular view it takes all of the screen's width (ignore 'Editor -> Readable line length' being off in Zen mode)")
+			.addToggle((toggle) =>	toggle
+				.setValue(this.plugin.settings.forceReadable)
+				.onChange(async (value) => {
+					this.plugin.settings.forceReadable = value;
 					await this.plugin.saveSettings();
 			})
 		);
