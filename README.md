@@ -12,7 +12,7 @@ ProZen not just simply turns your active tab fullscreen - it removes every singl
 ## Usage
 ### Manual Installation
 Hopefully, this plugin will make it to [Obsidian's plugin gallery](https://obsidian.md/plugins), until then, you can install it manually:
-1. Download the `main.js`, `styles.css` and `manifest.json` files.
+1. Download the `main.js`, `styles.css` and `manifest.json` files from the [latest release's package](https://github.com/cmoskvitin/obsidian-prozen/releases).
 2. Go to the `/.obsidian/plugins` folder of your Obsidian vault. Create `/obsidian-prozen` in there.
 3. Put the downloaded files into the `/obsidian-prozen` folder.
 4. Restart Obsidian.
