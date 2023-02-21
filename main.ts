@@ -71,7 +71,9 @@ export default class Prozen extends Plugin {
 			this.addStyles(leaf);
 			this.isActive = true;
 		} else {
-			document.exitFullscreen();
+			if (document.fullscreenElement) {
+				document.exitFullscreen();
+			}
 			this.removeStyles(leaf);
 			this.isActive = false;
 		}
