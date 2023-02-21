@@ -5,11 +5,23 @@
 	--vignette-scale-radial: 50%;
 }
 
-.noscroll ::-webkit-scrollbar-thumb{
+.noscroll ::-webkit-scrollbar-thumb {
 	visibility: hidden;
 }
 
+.zenpro-fake-fullscreen .titlebar,
+.zenpro-fake-fullscreen .workspace-tab-header-container,
+.zenpro-fake-fullscreen .workspace-tab-header,
+.zenpro-fake-fullscreen .workspace-ribbon {
+	display: none !important;
+}
+
 .vignette-linear {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	background: linear-gradient(
 		90deg,
 		rgba(0, 0, 0, var(--vignette-opacity)) 0%,
